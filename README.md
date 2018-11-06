@@ -44,4 +44,4 @@ You can add the different host's ipaddresses for processing it in distributed en
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/Jasongattagalla/Message-Passing-Interface---Parallel-Pattern-Matching-Algorithm/blob/master/LICENSE) file for details
