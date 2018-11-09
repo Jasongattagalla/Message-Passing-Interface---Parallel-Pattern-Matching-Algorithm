@@ -14,160 +14,19 @@ int max (int a, int b) { return (a > b)? a: b; }
 void badCharHeuristic( char *str, int size, 
                         int badchar[NO_OF_CHARS])
 {
-    int i;
- 
-    // Initialize all occurrences as -1
-    for (i = 0; i < NO_OF_CHARS; i++)
-         badchar[i] = -1;
- 
-    // Fill the actual value of last occurrence 
-    // of a character
-    for (i = 0; i < size; i++)
-         badchar[(int) str[i]] = i;
+   
 }
  
 /* A pattern searching function that uses Bad
    Character Heuristic of Boyer Moore Algorithm */
 void search( char *txt,  char *pat)
 {
-    int counter = 1;
-    int m = strlen(pat);
-    int n = strlen(txt);
- 
-    int badchar[NO_OF_CHARS];
- 
-    /* Fill the bad character array by calling 
-       the preprocessing function badCharHeuristic() 
-       for given pattern */
-    badCharHeuristic(pat, m, badchar);
- 
-    int s = 0;  // s is shift of the pattern with 
-                // respect to text
-    while(s <= (n - m))
-    {
-        int j = m-1;
- 
-        /* Keep reducing index j of pattern while 
-           characters of pattern and text are 
-           matching at this shift s */
-        while(j >= 0 && pat[j] == txt[s+j])
-            j--;
- 
-        /* If the pattern is present at current
-           shift, then index j will become -1 after
-           the above loop */
-        if (j < 0)
-        {
-            printf("\n Boyer Moore-->pattern occurs at shift = %d", s);
- 
-            /* Shift the pattern so that the next 
-               character in text aligns with the last 
-               occurrence of it in pattern.
-               The condition s+m < n is necessary for 
-               the case when pattern occurs at the end 
-               of text */
-            s += (s+m < n)? m-badchar[txt[s+m]] : 1;
- 
-        }
- 
-        else
-            /* Shift the pattern so that the bad character
-               in text aligns with the last occurrence of
-               it in pattern. The max function is used to
-               make sure that we get a positive shift. 
-               We may get a negative shift if the last 
-               occurrence  of bad character in pattern
-               is on the right side of the current 
-               character. */
-            s += max(1, j - badchar[txt[s+j]]);
-            counter++;
-    }
-    if (counter == m)
-    {
-        printf("The pattern is not found!\n");
-    }
-}
 
-// Fills lps[] for given patttern pat[0..M-1]
-void computeLPSArray(char *pat, int M, int *lps)
-{
-    // length of the previous longest prefix suffix
-    int len = 0;
- 
-    lps[0] = 0; // lps[0] is always 0
- 
-    // the loop calculates lps[i] for i = 1 to M-1
-    int i = 1;
-    while (i < M)
-    {
-        if (pat[i] == pat[len])
-        {
-            len++;
-            lps[i] = len;
-            i++;
-        }
-        else // (pat[i] != pat[len])
-        {
-            // This is tricky. Consider the example.
-            // AAACAAAA and i = 7. The idea is similar 
-            // to search step.
-            if (len != 0)
-            {
-                len = lps[len-1];
- 
-                // Also, note that we do not increment
-                // i here
-            }
-            else // if (len == 0)
-            {
-                lps[i] = 0;
-                i++;
-            }
-        }
-    }
 }
 
 void KMPSearch(char *pat, char *txt)
 {
-    int M = strlen(pat);
-    int N = strlen(txt);
-    
-    // create lps[] that will hold the longest prefix suffix
-    // values for pattern
-    int lps[M];
- 
-    // Preprocess the pattern (calculate lps[] array)
-    computeLPSArray(pat, M, lps);
-    
-    int i = 0;  // index for txt[]
-    int j  = 0;  // index for pat[]
-    while (i < N)
-    {
-
-        if (pat[j] == txt[i])
-        {
-
-            j++;
-            i++;
-        }
- 
-        if (j == M)
-        {
-            printf("\n KMP-->Found pattern at index %d ", i-j);
-            j = lps[j-1];
-        }
- 
-        // mismatch after j matches
-        else if (i < N && pat[j] != txt[i])
-        {
-            // Do not match lps[0..lps[j-1]] characters,
-            // they will match anyway
-            if (j != 0)
-                j = lps[j-1];
-            else
-                i = i+1;
-        }
-    }
+   
 }
  
 
